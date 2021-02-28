@@ -54,8 +54,12 @@ steps:
     arguments: '--no-build --configuration $(buildConfiguration) --output $(Build.ArtifactStagingDirectory)/$(buildConfiguration)'
     zipAfterPublish: true
 
-- task: WhiteSource@21
-  displayName: 'Run WhiteSource Bolt'
+- task: SnykSecurityScan@0
+  inputs:
+    serviceConnectionEndpoint: 'SnykServiceConnection'
+    testType: 'app'
+    monitorOnBuild: true
+    failOnIssues: true
 
 - task: PublishBuildArtifacts@1
   displayName: 'Publish Artifact: drop'
